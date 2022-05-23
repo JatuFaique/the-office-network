@@ -1,26 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Signup from "../Components/Signup";
+import SignIn from "../Components/SignIn";
 import { authHandler } from "../features/auth/authSlice";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [formData, setFormData] = useState({});
-  const { login, status, error, errorMessage } = useSelector(
-    (state) => state.auth
-  );
-  const dispatch = useDispatch();
-  const handleSignIn = () => {
-    dispatch(authHandler(formData));
-  };
-
-  const handleFormData = (event) => {
-    const field = event.target.name;
-    setFormData({ ...formData, [field]: event.target.value });
-  };
-
-  //   if (login === true) {
-  //     //navigate to
-  //   }
+  const [existingUser, existingUserToggle] = useState(true);
+  const { status, error, errorMessage } = useSelector((state) => state.auth);
+  console.log("jieiej", status);
+  const navigate = useNavigate();
 
   const CheckStatus = () => {
     if (status === "loading") {
@@ -31,6 +21,7 @@ function Login() {
         </>
       );
     } else if (status === "fullfiled" && !error) {
+      // navigate("/home");
       return (
         <>
           <p>Successfully Signed in</p>
@@ -48,6 +39,20 @@ function Login() {
   return (
     <div class="container__login">
       <div class="col-left grid-span2 flex px-3">
+        <h4>
+          Not Registered Yet?{" "}
+          <span>
+            <button
+              onClick={() => {
+                existingUserToggle(!existingUser);
+              }}
+              className="btn bg-scn px-1 py-0-5 border-bs"
+            >
+              Sign Up
+            </button>
+          </span>
+        </h4>
+
         <h1>
           Welcome, Log in to your
           <p>OfficeNetwork</p>
@@ -55,39 +60,11 @@ function Login() {
         </h1>
       </div>
       <div class="col-right px-3 flex">
-        <p>{CheckStatus()}</p>
-        <h2>Please Sign In</h2>
-        <div class="input-field">
-          <input
-            name="username"
-            id="email-field"
-            class="border-bs"
-            type="text"
-            pattern=".*\S.*"
-            required
-            onChange={handleFormData}
-          />
-          <label for="email-field" class="placeholder txt">
-            Enter UserName
-          </label>
-        </div>
-        <div class="input-field">
-          <input
-            name="password"
-            id="email-field"
-            class="border-bs"
-            type="text"
-            pattern=".*\S.*"
-            onChange={handleFormData}
-            required
-          />
-          <label for="email-field" class="placeholder txt">
-            Enter Password
-          </label>
-        </div>
-        <button onClick={handleSignIn} class="btn bg-scn px-2 py-0-5 txt-white">
-          Sign In
-        </button>
+        {existingUser ? (
+          <SignIn checkStatus={CheckStatus} />
+        ) : (
+          <Signup checkStatus={CheckStatus} />
+        )}
       </div>
     </div>
   );
