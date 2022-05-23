@@ -1,0 +1,12 @@
+.tabs__container {
+  /* max-width: 20rem;
+  min-width: 18em; */
+  width: 100%;
+  background-color: var(--colorWhite);
+}
+
+.tabs__container ul {
+  list-style: none;
+  text-decoration: none;
+  padding: 0;
+}

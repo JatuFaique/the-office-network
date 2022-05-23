@@ -1,0 +1,18 @@
+.create__post {
+  width: 100%;
+  flex-direction: column;
+  background-color: var(--colorWhite);
+  position: relative;
+}
+
+.create__post .btn {
+  align-self: flex-end;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.row textarea {
+  width: 100%;
+}

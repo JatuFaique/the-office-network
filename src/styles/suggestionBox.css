@@ -1,0 +1,10 @@
+.user__suggestions {
+  /* max-width: 20rem; */
+  width: 100%;
+  background-color: var(--colorWhite);
+}
+
+.suggestion__item {
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,24 @@
+.profile__card {
+  background-color: var(--colorWhite);
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile__card .profile__avatar {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__card .about {
+  justify-content: space-between;
+  width: 100%;
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+
+.about > .grid {
+  gap: 0.1rem;
+}

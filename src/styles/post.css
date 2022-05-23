@@ -1,0 +1,36 @@
+.post {
+  background-color: var(--colorWhite);
+  /* max-width: 32rem; */
+  width: 100%;
+}
+.post .post__header {
+  align-items: center;
+  font-size: var(--lenlg1);
+  font-weight: 500;
+}
+
+.post__header h3 {
+  font-weight: 500;
+}
+
+.post__text {
+  border-bottom: 1px solid var(--colorAcc);
+}
+
+.post__buttons {
+  font-size: var(--lenmed3);
+}
+
+.user__comment {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.user__comment input {
+  width: 100%;
+}
+
+.comment__card {
+  font-size: var(--lenmed1);
+  justify-content: space-around;
+  background-color: var(--colorAcc);
+}

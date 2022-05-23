@@ -1,0 +1,39 @@
+.av-m {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: var(--lenmed3);
+  height: var(--lenlg1);
+  width: var(--lenlg1);
+}
+
+.av-lg {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: var(--lenlg1);
+  height: var(--lenlg2);
+  width: var(--lenlg2);
+}
+
+.br-prm {
+  border: 1px solid var(--colorPrimary);
+}
+
+.br-scn {
+  border: 1px solid var(--colorSecn);
+}
+
+.badge-act {
+  position: absolute;
+  border-radius: 50%;
+  top: 0;
+  left: 0px;
+  height: 0.5rem;
+  width: 0.5rem;
+  background-color: var(--colorSucces);
+}
