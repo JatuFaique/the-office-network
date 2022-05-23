@@ -1,20 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authHandler } from "../features/auth/authSlice";
 import "./Login.css";
 
 function Login() {
-  const { login } = useSelector((state) => state.auth);
+  const [formData, setFormData] = useState({});
+  const { login, status, error, errorMessage } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const handleSignIn = () => {
-    dispatch(authHandler());
-    console.log("after daya");
+    dispatch(authHandler(formData));
   };
-  console.log("hii", typeof login);
+
+  const handleFormData = (event) => {
+    const field = event.target.name;
+    setFormData({ ...formData, [field]: event.target.value });
+  };
 
   //   if (login === true) {
   //     //navigate to
   //   }
+
+  const CheckStatus = () => {
+    if (status === "loading") {
+      return (
+        <>
+          {" "}
+          <p>Loading</p>
+        </>
+      );
+    } else if (status === "fullfiled" && !error) {
+      return (
+        <>
+          <p>Successfully Signed in</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <p>{errorMessage}</p>
+        </>
+      );
+    }
+  };
 
   return (
     <div class="container__login">
@@ -26,26 +55,30 @@ function Login() {
         </h1>
       </div>
       <div class="col-right px-3 flex">
-        <p>{String(login)}</p>
+        <p>{CheckStatus()}</p>
         <h2>Please Sign In</h2>
         <div class="input-field">
           <input
+            name="username"
             id="email-field"
             class="border-bs"
             type="text"
             pattern=".*\S.*"
             required
+            onChange={handleFormData}
           />
           <label for="email-field" class="placeholder txt">
-            Enter Email
+            Enter UserName
           </label>
         </div>
         <div class="input-field">
           <input
+            name="password"
             id="email-field"
             class="border-bs"
             type="text"
             pattern=".*\S.*"
+            onChange={handleFormData}
             required
           />
           <label for="email-field" class="placeholder txt">

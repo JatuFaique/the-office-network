@@ -3,38 +3,41 @@ import axios from "axios";
 
 const initialState = {
   login: false,
-  loading: true,
+  status: "idle",
   token: "",
   errorMessage: null,
   userDetail: "",
 };
 
-export const authHandler = createAsyncThunk("auth/authHandler", async () => {
-  try {
-    const res = await axios.post("/api/auth/login", {
-      username: "adarshbalika",
-      password: "adarshBalika123",
-    });
-    console.log("oyee", res);
-    return res.data;
-  } catch (err) {
-    console.log(err);
+export const authHandler = createAsyncThunk(
+  "auth/authHandler",
+  async (formData) => {
+    console.log(formData);
+    try {
+      const res = await axios.post("/api/auth/login", formData);
+      return res;
+    } catch (err) {
+      return err;
+    }
   }
-});
+);
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
   extraReducers: {
-    [authHandler.pending]: (state) => {
-      console.log("idhar");
-      state.loading = false;
+    [authHandler.pending]: (state, action) => {
+      state.status = "loading";
     },
     [authHandler.fulfilled]: (state, action) => {
-      console.log("daya", action.payload);
-
-      state.login = true;
+      if (action.payload.status === 200 || action.payload.status === 201) {
+        state.status = "fullfiled";
+        state.login = true;
+      } else {
+        state.status = "Failed";
+        state.errorMessage = "Something went Wrong";
+      }
     },
   },
 });
