@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />}></Route>
         <Route path="/home" element={<Home />}></Route>
+        <Route path="/mockman" element={<Mockman />}></Route>
       </Routes>
 
       {/* <Mockman /> */}

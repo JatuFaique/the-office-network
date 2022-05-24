@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authHandler } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function SignIn({ checkStatus }) {
   const [formData, setFormData] = useState({});
-  const { status, error, errorMessage } = useSelector((state) => state.auth);
+  const { status, error, errorMessage, token } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -15,8 +17,9 @@ function SignIn({ checkStatus }) {
   };
   const handleSignIn = () => {
     dispatch(authHandler(formData));
-    navigate("/home");
+    // navigate("/home");
   };
+
   return (
     <div className="col-right px-3 flex">
       <h2>Please Sign In</h2>

@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function SideBar() {
+  const isMounted = useRef(false);
+  const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   //   Clear Local Storage and navigate to "/" remove encodedtoken
   const handleLogout = () => {
     setTimeout(() => {
-      console.log("adio");
-      localStorage.clear();
-      navigate("/");
+      dispatch(logoutUser());
     }, 2000);
   };
+
+  useEffect(() => {
+    if (isMounted.current) {
+      navigate("/");
+    } else {
+      isMounted.current = true;
+    }
+  }, [token]);
 
   // Add Brand Logo and Logout Button
   return (
