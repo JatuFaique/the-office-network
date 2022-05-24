@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { authHandler } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function SignIn({ checkStatus }) {
+  const isMounted = useRef(false);
   const [formData, setFormData] = useState({});
   const { status, error, errorMessage, token } = useSelector(
     (state) => state.auth
@@ -19,6 +20,13 @@ function SignIn({ checkStatus }) {
     dispatch(authHandler(formData));
     // navigate("/home");
   };
+  useEffect(() => {
+    if (isMounted.current) {
+      navigate("/home");
+    } else {
+      isMounted.current = true;
+    }
+  }, [token]);
 
   return (
     <div className="col-right px-3 flex">

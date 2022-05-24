@@ -7,21 +7,11 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const isMounted = useRef(false);
   const [existingUser, existingUserToggle] = useState(true);
   const { status, error, errorMessage, token, login } = useSelector(
     (state) => state.auth
   );
   console.log("jieiej", status);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isMounted.current) {
-      navigate("/home");
-    } else {
-      isMounted.current = true;
-    }
-  }, [token]);
 
   const CheckStatus = () => {
     if (status === "loading") {

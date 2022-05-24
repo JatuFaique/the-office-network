@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { signUpHandler } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Signup({ checkStatus }) {
+  const isMounted = useRef(false);
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-  const { status, error, errorMessage } = useSelector((state) => state.auth);
+  const { status, error, errorMessage, token } = useSelector(
+    (state) => state.auth
+  );
 
   const dispatch = useDispatch();
   const handleFormData = (event) => {
@@ -15,8 +18,17 @@ function Signup({ checkStatus }) {
   };
   const handleSignUp = () => {
     dispatch(signUpHandler(formData));
-    navigate("/home");
   };
+
+  useEffect(() => {
+    console.log("monten", isMounted);
+    if (isMounted.current) {
+      console.log("monten", isMounted);
+      navigate("/home");
+    } else {
+      isMounted.current = true;
+    }
+  }, [token]);
   return (
     <div className="col-right px-3 flex">
       <h2>Create and Account</h2>

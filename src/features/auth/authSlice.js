@@ -26,13 +26,15 @@ export const authHandler = createAsyncThunk(
 
 export const signUpHandler = createAsyncThunk(
   "auth/signUpHandler",
-  async (formData) => {
+  async (formData, { rejectWithValue }) => {
     console.log(formData);
     try {
       const res = await axios.post("/api/auth/signup", formData);
-      return res;
+
+      return res.data;
     } catch (err) {
-      return err;
+      console.log("wrng ", err);
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -72,13 +74,13 @@ export const authSlice = createSlice({
     },
     [signUpHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
-      state.userDetail = action.payload.data.createdUser.firstName;
-      state.token = action.payload.data.encodedToken;
+      state.userDetail = action.payload.createdUser.firstName;
+      state.token = action.payload.encodedToken;
       state.status = "fullfiled";
       state.login = true;
     },
     [signUpHandler.rejected]: (state, action) => {
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload.errors;
       state.status = "Rejected";
       state.login = false;
     },
