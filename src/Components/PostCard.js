@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 function PostCard({ post }) {
+  const { userDetail } = useSelector((state) => state.auth);
   return (
     <div className="flex px-2 py-1">
       <div class="post border-bs px-2 py-1 post__horizontal">
@@ -28,13 +30,13 @@ function PostCard({ post }) {
         </div>
         <div class="user__comment flex">
           <div class="av-m txt-prm br-prm">
-            A <span class="badge-act"></span>
+            {userDetail[0]} <span class="badge-act"></span>
           </div>
           <input class="border-bs" type="text" />
           <button class="btn bg-prm py-0-25 px-0-5 txt-white">Send</button>
         </div>
         <div class="post__comments flex column py-1">
-          {post.comments.map((comment) => {
+          {post.comments?.map((comment) => {
             return (
               <div class="comment__card border-radius p-0-5">
                 <div class="flex">

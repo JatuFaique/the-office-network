@@ -58,7 +58,7 @@ export const authSlice = createSlice({
     },
     [authHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
-      state.userDetail = action.payload.foundUser.firstName;
+      state.userDetail = action.payload.foundUser.username;
       state.token = action.payload.encodedToken;
       localStorage.setItem("token", action.payload.encodedToken);
       state.status = "fullfiled";
@@ -74,7 +74,7 @@ export const authSlice = createSlice({
     },
     [signUpHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
-      state.userDetail = action.payload.createdUser.firstName;
+      state.userDetail = action.payload.createdUser.username;
       state.token = action.payload.encodedToken;
       state.status = "fullfiled";
       state.login = true;
