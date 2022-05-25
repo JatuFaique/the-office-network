@@ -22,8 +22,9 @@
 }
 
 .user__comment {
-  align-items: flex-end;
+  /* align-items: flex-end; */
   justify-content: flex-end;
+  align-items: center;
 }
 .user__comment input {
   width: 100%;

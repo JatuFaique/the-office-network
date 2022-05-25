@@ -1,15 +1,25 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PostCard from "../Components/PostCard";
 import RightBar from "../Components/RightBar";
 import SideBar from "../Components/SideBar";
+import { getPosts } from "../features/timeline/postSlice";
 import "./Home.css";
 
 function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { post } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //   Get posts
-  });
+    console.log("hdhd");
+    dispatch(getPosts());
+  }, []);
+
+  console.log("bhaiy", post);
+
   return (
     <div className="container grid">
       <SideBar />
@@ -36,130 +46,9 @@ function Home() {
             <i class="fa-solid fa-bolt"></i>Recent
           </div>
         </div>
-        <div class="flex p-2">
-          <div class="post border-bs px-2 py-1 post__horizontal">
-            <div class="post__header flex">
-              <div class="av-lg txt-prm br-prm">
-                A <span class="badge-act"></span>
-              </div>
-              <span>
-                <h3>Title</h3>
-              </span>
-            </div>
-            <div class="post__text py-1">
-              <p>
-                Visit ten places on our planet that are undergoing the biggest
-                changes today. Lorem ipsum, dolor sit amet consectetur
-                adipisicing elit. Doloremque alias corporis repellendus velit
-                dolore deserunt ad sunt nam eos totam, quibusdam vero. Repellat,
-                autem ut quo aspernatur similique quod reprehenderit.
-              </p>
-            </div>
-            <div class="post__buttons flex py-1">
-              <span class="txt-scn">
-                {/* <!-- <i class="fa-solid fa-heart"></i> --> */}
-                <i class="fa-regular fa-heart"></i>
-                Like
-              </span>
-              <span>
-                <i class="fa-regular fa-bookmark"></i>
-                BookMark
-              </span>
-            </div>
-            <div class="user__comment flex">
-              <div class="av-m txt-prm br-prm">
-                A <span class="badge-act"></span>
-              </div>
-              <input class="border-bs" type="text" />
-              <button class="btn bg-prm py-0-25 px-0-5 txt-white">Send</button>
-            </div>
-            <div class="post__comments flex column py-1">
-              <div class="comment__card border-radius p-0-5">
-                <div class="flex">
-                  <div class="av-m txt-white bg-scn">R</div>
-                  <span>
-                    <h3>Hello</h3>
-                  </span>
-                </div>
-
-                <div class="comment__content">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Repellendus ut deserunt
-                  </p>
-                </div>
-              </div>
-              <div class="comment__card border-radius p-0-5">
-                <div class="flex">
-                  <div class="av-m txt-white bg-scn">R</div>
-                  <span>
-                    <h3>Hello</h3>
-                  </span>
-                </div>
-
-                <div class="comment__content">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Repellendus ut deserunt
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex px-2 py-1">
-          <div class="post border-bs px-2 py-1 post__horizontal">
-            <div class="post__header flex">
-              <div class="av-lg txt-prm br-prm">
-                A <span class="badge-act"></span>
-              </div>
-              <span>
-                <h3>Title</h3>
-              </span>
-            </div>
-            <div class="post__text py-1">
-              <p>
-                Visit ten places on our planet that are undergoing the biggest
-                changes today. Lorem ipsum, dolor sit amet consectetur
-              </p>
-            </div>
-            <div class="post__buttons flex py-1">
-              <span class="txt-scn">
-                {/* <!-- <i class="fa-solid fa-heart"></i> --> */}
-                <i class="fa-regular fa-heart"></i>
-                Like
-              </span>
-              <span>
-                <i class="fa-regular fa-bookmark"></i>
-                BookMark
-              </span>
-            </div>
-            <div class="user__comment flex">
-              <div class="av-m txt-prm br-prm">
-                A <span class="badge-act"></span>
-              </div>
-              <input type="text" />
-              <button class="btn bg-prm py-0-25 px-0-5 txt-white">Send</button>
-            </div>
-            <div class="post__comments flex column py-1">
-              <div class="comment__card border-radius p-0-5">
-                <div class="flex">
-                  <div class="av-m txt-white bg-scn">R</div>
-                  <span>
-                    <h3>Hello</h3>
-                  </span>
-                </div>
-
-                <div class="comment__content">
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Repellendus ut deserunt
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {post.map((post) => {
+          return <PostCard post={post} />;
+        })}
       </div>
       <RightBar />
     </div>
