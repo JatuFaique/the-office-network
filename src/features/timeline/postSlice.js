@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
   post: [],
+  status: "",
 };
 
 export const getPosts = createAsyncThunk("posts/getPost", async () => {
@@ -41,7 +42,12 @@ export const userPosts = createAsyncThunk(
 export const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    sortBy: (state, action) => {
+      console.log("ima", action.payload);
+      state.post = action.payload;
+    },
+  },
   extraReducers: {
     [getPosts.pending]: (state) => {
       state.status = "loading";
@@ -58,6 +64,7 @@ export const postSlice = createSlice({
     },
     [userPosts.fulfilled]: (state, action) => {
       state.post = action.payload.posts;
+      state.status = "fulfilled";
       console.log("done posted", action.payload.posts);
     },
     [userPosts.rejected]: (state) => {
@@ -66,4 +73,5 @@ export const postSlice = createSlice({
   },
 });
 
+export const { sortBy } = postSlice.actions;
 export default postSlice.reducer;

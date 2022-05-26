@@ -59,6 +59,7 @@ export const authSlice = createSlice({
     [authHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
       state.userDetail = action.payload.foundUser.username;
+      localStorage.setItem("user", JSON.stringify(action.payload.foundUser));
       state.token = action.payload.encodedToken;
       localStorage.setItem("token", action.payload.encodedToken);
       state.status = "fullfiled";

@@ -4,15 +4,17 @@ import { useNavigate } from "react-router-dom";
 import PostCard from "../Components/PostCard";
 import RightBar from "../Components/RightBar";
 import SideBar from "../Components/SideBar";
-import { getPosts, userPosts } from "../features/timeline/postSlice";
+import { getpostSorted } from "../features/timeline/getpostSorted";
+import { getPosts, sortBy, userPosts } from "../features/timeline/postSlice";
 import "./Home.css";
 
 function Home() {
   // const navigate = useNavigate();
-  const { post } = useSelector((state) => state.post);
+  const { post, status } = useSelector((state) => state.post);
   const { userDetail, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [postContent, setPostContent] = useState({});
+  const [showBy, setShowBy] = useState("Recent");
 
   const handlePost = (event) => {
     setPostContent({
@@ -29,43 +31,62 @@ function Home() {
 
   useEffect(() => {
     //   Get posts
-    console.log("hdhd");
     dispatch(getPosts());
   }, []);
 
   // console.log("bhaiy", post);
 
+  useEffect(() => {
+    dispatch(sortBy(getpostSorted(showBy, post)));
+  }, [showBy, status]);
+
   return (
     <div className="container grid">
       <SideBar />
-      <div class="col-2">
-        <div class="flex py-2">
-          <div class="create__post border-radius border-vs flex p-0-5">
-            <div class="row flex">
-              <div class="av-lg txt br-scn bg-acc">
+      <div className="col-2">
+        <div className="flex py-2">
+          <div className="create__post border-radius border-vs flex p-0-5">
+            <div className="row flex">
+              <div className="av-lg txt br-scn bg-acc">
                 {userDetail[0]}
-                <span class="badge-act"></span>
+                <span className="badge-act"></span>
               </div>
               <textarea
                 onChange={handlePost}
-                class="border-bs p-0-5"
+                className="border-bs p-0-5"
                 placeholder="Whats on your Mind?"
               ></textarea>
             </div>
             <button
               onClick={handlePostSubmit}
-              class="btn bg-prm py-0-25 px-0-5 txt-white"
+              className="btn bg-prm py-0-25 px-0-5 txt-white"
             >
               Send
             </button>
           </div>
         </div>
-        <div class="filter border-bs border-radius flex">
-          <div class="filter__trending p-1 txt bold txt-scn">
-            <i class="fa-solid fa-fire"></i>Trending
+        <div className="filter border-bs border-radius flex">
+          <div
+            onClick={() => {
+              setShowBy("Trending");
+            }}
+            className={
+              "btn filter__trending p-1 " +
+              (showBy === "Trending" ? "txt-bold txt-scn" : "")
+            }
+          >
+            <i className="fa-solid fa-fire"></i>Trending
           </div>
-          <div class="filter__recent p-1 txt">
-            <i class="fa-solid fa-bolt"></i>Recent
+          <div
+            onClick={() => {
+              setShowBy("Recent");
+            }}
+            className={
+              "btn filter__recent p-1 " +
+              (showBy === "Recent" ? "txt-bold txt-scn" : "")
+            }
+          >
+            <i className="fa-solid fa-bolt"></i>Recent
           </div>
         </div>
         {post.map((post) => {
