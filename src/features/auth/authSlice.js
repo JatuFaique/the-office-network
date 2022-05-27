@@ -6,7 +6,7 @@ const initialState = {
   status: "idle",
   token: localStorage.getItem("token") || "",
   errorMessage: null,
-  userDetail: "",
+  userDetail: JSON.parse(localStorage.getItem("user")) || "",
 };
 
 export const authHandler = createAsyncThunk(
@@ -58,7 +58,7 @@ export const authSlice = createSlice({
     },
     [authHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
-      state.userDetail = action.payload.foundUser.username;
+      state.userDetail = action.payload.foundUser;
       localStorage.setItem("user", JSON.stringify(action.payload.foundUser));
       state.token = action.payload.encodedToken;
       localStorage.setItem("token", action.payload.encodedToken);
@@ -75,7 +75,7 @@ export const authSlice = createSlice({
     },
     [signUpHandler.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
-      state.userDetail = action.payload.createdUser.username;
+      state.userDetail = action.payload.createdUser;
       state.token = action.payload.encodedToken;
       state.status = "fullfiled";
       state.login = true;

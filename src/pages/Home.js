@@ -27,6 +27,7 @@ function Home() {
     dispatch(
       userPosts({ token: token, postContent: postContent }, postContent)
     );
+    setPostContent({ content: "" });
   };
 
   useEffect(() => {
@@ -48,10 +49,11 @@ function Home() {
           <div className="create__post border-radius border-vs flex p-0-5">
             <div className="row flex">
               <div className="av-lg txt br-scn bg-acc">
-                {userDetail[0]}
+                {userDetail.username[0]}
                 <span className="badge-act"></span>
               </div>
               <textarea
+                value={postContent.content}
                 onChange={handlePost}
                 className="border-bs p-0-5"
                 placeholder="Whats on your Mind?"

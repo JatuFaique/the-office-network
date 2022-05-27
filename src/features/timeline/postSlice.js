@@ -39,6 +39,52 @@ export const userPosts = createAsyncThunk(
   }
 );
 
+//getUserPosts to get all post of a particular user
+
+export const handleLike = createAsyncThunk(
+  "post/handleLike",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `/api/posts/like/${payload.postId}`,
+        {},
+        {
+          headers: {
+            authorization: payload.token,
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const handleDislike = createAsyncThunk(
+  "post/handleLike",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `/api/posts/dislike/${payload.postId}`,
+        {},
+        {
+          headers: {
+            authorization: payload.token,
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -68,6 +114,28 @@ export const postSlice = createSlice({
       console.log("done posted", action.payload.posts);
     },
     [userPosts.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [handleLike.pending]: (state) => {
+      state.status = "loading";
+    },
+    [handleLike.fulfilled]: (state, action) => {
+      state.post = action.payload.posts;
+      state.status = "fulfiled";
+      console.log("done");
+    },
+    [handleLike.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [handleDislike.pending]: (state) => {
+      state.status = "loading";
+    },
+    [handleDislike.fulfilled]: (state, action) => {
+      state.post = action.payload.posts;
+      state.status = "fulfiled";
+      console.log("done");
+    },
+    [handleDislike.rejected]: (state) => {
       state.status = "Rejected";
     },
   },
