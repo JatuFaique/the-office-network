@@ -4,6 +4,7 @@ import {
   handleDislike,
   handleLike,
   userComments,
+  userDeleteComments,
 } from "../features/timeline/postSlice";
 
 function PostCard({ post }) {
@@ -23,6 +24,17 @@ function PostCard({ post }) {
       userComments({ token: token, commentContent: comment, postId: post._id })
     );
     setComment({ text: "" });
+  };
+
+  const handleCommentDelete = (commentId) => {
+    console.log("ybddbb", commentId);
+    dispatch(
+      userDeleteComments({
+        token: token,
+        commentId: commentId,
+        postId: post._id,
+      })
+    );
   };
 
   const isLiked = post.likes.likedBy?.some(
@@ -95,6 +107,13 @@ function PostCard({ post }) {
                 <div className="comment__content">
                   <p>{comment.text}</p>
                 </div>
+                {userDetail.username === comment.username ? (
+                  <span onClick={() => handleCommentDelete(comment._id)}>
+                    <i class=" btn trash fa-solid fa-trash"></i>
+                  </span>
+                ) : (
+                  <></>
+                )}
               </div>
             );
           })}

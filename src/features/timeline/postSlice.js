@@ -111,6 +111,32 @@ export const userComments = createAsyncThunk(
   }
 );
 
+export const userDeleteComments = createAsyncThunk(
+  "post/userDeleteComments",
+  async (payload, { rejectWithValue }) => {
+    console.log("idhr", payload.commentId);
+    try {
+      const res = await axios.post(
+        `/api/comments/delete/${payload.postId}/${payload.commentId}`,
+        {},
+        {
+          headers: {
+            authorization: payload.token,
+          },
+        }
+      );
+      console.log("comment ", res.data);
+      return {
+        comments: res.data.comments,
+        postId: payload.postId,
+      };
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -175,6 +201,19 @@ export const postSlice = createSlice({
       console.log("done");
     },
     [userComments.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [userDeleteComments.pending]: (state) => {
+      state.status = "loading";
+    },
+    [userDeleteComments.fulfilled]: (state, action) => {
+      console.log("uu", action.payload);
+      state.post.find(({ _id }) => _id === action.payload.postId).comments =
+        action.payload.comments;
+      state.status = "fulfiled";
+      console.log("done");
+    },
+    [userDeleteComments.rejected]: (state) => {
       state.status = "Rejected";
     },
   },

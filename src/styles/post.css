@@ -31,7 +31,14 @@
 }
 
 .comment__card {
+  position: relative;
   font-size: var(--lenmed1);
   justify-content: space-around;
   background-color: var(--colorAcc);
+}
+
+.comment__card .trash {
+  position: absolute;
+  top: 16px;
+  right: 8px;
 }
