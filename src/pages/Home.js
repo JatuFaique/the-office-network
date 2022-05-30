@@ -24,9 +24,7 @@ function Home() {
   };
 
   const handlePostSubmit = () => {
-    dispatch(
-      userPosts({ token: token, postContent: postContent }, postContent)
-    );
+    dispatch(userPosts({ token: token, postContent: postContent }));
     setPostContent({ content: "" });
   };
 

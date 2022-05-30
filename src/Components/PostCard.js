@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleDislike, handleLike } from "../features/timeline/postSlice";
+import {
+  handleDislike,
+  handleLike,
+  userComments,
+} from "../features/timeline/postSlice";
 
 function PostCard({ post }) {
   const { userDetail, token } = useSelector((state) => state.auth);
+  const [comment, setComment] = useState({});
   const dispatch = useDispatch();
+
+  const handleComment = (event) => {
+    setComment({
+      ...comment,
+      text: event.target.value,
+    });
+  };
+
+  const handleCommentSubmit = () => {
+    dispatch(
+      userComments({ token: token, commentContent: comment, postId: post._id })
+    );
+    setComment({ text: "" });
+  };
 
   const isLiked = post.likes.likedBy?.some(
     (like) => like._id === userDetail._id
@@ -47,8 +66,18 @@ function PostCard({ post }) {
           <div className="av-m txt-prm br-prm">
             {userDetail[0]} <span className="badge-act"></span>
           </div>
-          <input className="border-bs" type="text" />
-          <button className="btn bg-prm py-0-25 px-0-5 txt-white">Send</button>
+          <input
+            value={comment.text}
+            onChange={handleComment}
+            className="border-bs"
+            type="text"
+          />
+          <button
+            onClick={handleCommentSubmit}
+            className="btn bg-prm py-0-25 px-0-5 txt-white"
+          >
+            Send
+          </button>
         </div>
         <div className="post__comments flex column py-1">
           {post.comments?.map((comment) => {
