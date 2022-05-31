@@ -4,77 +4,29 @@ import { useNavigate } from "react-router-dom";
 import PostCard from "../Components/PostCard";
 import RightBar from "../Components/RightBar";
 import SideBar from "../Components/SideBar";
-import { getFollowingUser } from "../features/timeline/getFollowingUser";
 import { getpostSorted } from "../features/timeline/getpostSorted";
 import { getPosts, sortBy, userPosts } from "../features/timeline/postSlice";
 import "./Home.css";
 
-function Home() {
-  // const navigate = useNavigate();
+function Explore() {
   const { post, status } = useSelector((state) => state.post);
   const { userDetail, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [postContent, setPostContent] = useState({});
   const [showBy, setShowBy] = useState("Recent");
-
-  const handlePost = (event) => {
-    setPostContent({
-      ...postContent,
-      content: event.target.value,
-    });
-  };
-
-  const handlePostSubmit = () => {
-    dispatch(userPosts({ token: token, postContent: postContent }));
-    setPostContent({ content: "" });
-  };
-
   useEffect(() => {
     //   Get posts
-
     dispatch(getPosts());
   }, []);
-
-  // console.log("bhaiy", post);
 
   useEffect(() => {
     dispatch(sortBy(getpostSorted(showBy, post)));
   }, [showBy, status]);
 
-  const filteredPosts = getFollowingUser({
-    post,
-    following: userDetail?.following,
-    uid: userDetail?.username,
-  });
-
-  console.log(filteredPosts, userDetail.following);
-
   return (
     <div className="container grid">
       <SideBar />
       <div className="col-2">
-        <div className="flex py-2">
-          <div className="create__post border-radius border-vs flex p-0-5">
-            <div className="row flex">
-              <div className="av-lg txt br-scn bg-acc">
-                {userDetail.username[0]}
-                <span className="badge-act"></span>
-              </div>
-              <textarea
-                value={postContent.content}
-                onChange={handlePost}
-                className="border-bs p-0-5"
-                placeholder="Whats on your Mind?"
-              ></textarea>
-            </div>
-            <button
-              onClick={handlePostSubmit}
-              className="btn bg-prm py-0-25 px-0-5 txt-white"
-            >
-              Send
-            </button>
-          </div>
-        </div>
+        <div className="flex py-2"></div>
         <div className="filter border-bs border-radius flex">
           <div
             onClick={() => {
@@ -108,4 +60,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Explore;

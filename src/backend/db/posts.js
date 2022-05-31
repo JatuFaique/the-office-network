@@ -42,20 +42,19 @@ export const posts = [
   },
   {
     _id: uuid(),
-    content:
-      "Addat song is so underrated , it is one the best from coke studio and I love that.",
+    content: "I like iceCream and I cant stop eating!",
     likes: {
       likeCount: 4,
       likedBy: [],
       dislikedBy: [],
     },
-    username: "shubhamsoni",
+    username: "bhaveshagarwal",
 
     comments: [
       {
         _id: uuid(),
         username: "shubhamsoni",
-        text: "Interesting",
+        text: "Amazing",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -65,6 +64,30 @@ export const posts = [
         _id: uuid(),
         username: "sohamshah",
         text: "Wow!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+  {
+    _id: uuid(),
+    content: "Is it okay to take sick leaves on mondays",
+    likes: {
+      likeCount: 4,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "monicathapar",
+
+    comments: [
+      {
+        _id: uuid(),
+        username: "shubhamsoni",
+        text: "Interesting",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
