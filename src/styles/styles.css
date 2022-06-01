@@ -259,6 +259,11 @@ i {
   padding-left: 0.75em;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Set Up body */
 
 body {

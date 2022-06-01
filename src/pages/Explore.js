@@ -25,8 +25,7 @@ function Explore() {
   return (
     <div className="container grid">
       <SideBar />
-      <div className="col-2">
-        <div className="flex py-2"></div>
+      <div className="col-2 py-1">
         <div className="filter border-bs border-radius flex">
           <div
             onClick={() => {
