@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { followUser } from "../features/auth/authSlice";
 
 function RightBar() {
-  const { token } = useSelector((state) => state.auth);
+  const { token, userDetail } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
   const dispatch = useDispatch();
 
@@ -30,13 +30,26 @@ function RightBar() {
     getAllUsers();
   }, []);
 
+  const getNonFollow = (users) => {
+    if (users) {
+      const usernames = userDetail?.following.map(({ username }) => username);
+      users.map((user) => console.log(user.username, usernames));
+      return users.filter(
+        ({ username }) =>
+          !usernames.includes(username) || username === userDetail?.username
+      );
+    }
+  };
+
+  const nonFollowUser = getNonFollow(users);
+
   return (
     <div class="col-3">
       <div class="flex pos-sticky p-2">
         <div class="user__suggestions p-0-25 border-radius">
           <h2 class="px-2 bold">Who to follow</h2>
           <div class="suggestions__lists px-1">
-            {users.map((user) => {
+            {nonFollowUser.map((user) => {
               return (
                 <div class="suggestion__item flex py-0-5">
                   <div class="av-lg txt-scn br-scn">{user.username[0]}</div>
