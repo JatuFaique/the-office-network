@@ -9,6 +9,52 @@ const initialState = {
   userDetail: JSON.parse(localStorage.getItem("user")) || "",
 };
 
+export const handleBookmark = createAsyncThunk(
+  "auth/handleBookmark",
+  async (payload, { rejectWithValue }) => {
+    console.log("iin bookmark");
+    try {
+      const res = await axios.post(
+        `/api/users/bookmark/${payload.postId}`,
+        {},
+        {
+          headers: {
+            authorization: payload.token,
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const handleUnBookmark = createAsyncThunk(
+  "auth/handleBookmark",
+  async (payload, { rejectWithValue }) => {
+    console.log("iin unbookmark");
+    try {
+      const res = await axios.post(
+        `/api/users/remove-bookmark/${payload.postId}`,
+        {},
+        {
+          headers: {
+            authorization: payload.token,
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const followUser = createAsyncThunk(
   "auth/followUser",
   async (userInfo, { rejectWithValue }) => {
@@ -154,6 +200,28 @@ export const authSlice = createSlice({
       ];
     },
     [unfollowUser.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errors;
+      state.status = "Rejected";
+    },
+    [handleBookmark.pending]: (state) => {
+      state.status = "loading";
+    },
+    [handleBookmark.fulfilled]: (state, action) => {
+      console.log("ho gayi", action.payload);
+      state.userDetail.bookmarks = action.payload.bookmarks;
+    },
+    [handleBookmark.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errors;
+      state.status = "Rejected";
+    },
+    [handleUnBookmark.pending]: (state) => {
+      state.status = "loading";
+    },
+    [handleUnBookmark.fulfilled]: (state, action) => {
+      console.log("ho gayi", action.payload);
+      state.userDetail.bookmarks = action.payload.bookmarks;
+    },
+    [handleUnBookmark.rejected]: (state, action) => {
       state.errorMessage = action.payload.errors;
       state.status = "Rejected";
     },

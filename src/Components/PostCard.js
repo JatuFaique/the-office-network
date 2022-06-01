@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { handleBookmark, handleUnBookmark } from "../features/auth/authSlice";
 import {
   handleDislike,
   handleLike,
@@ -41,6 +42,15 @@ function PostCard({ post }) {
     (like) => like._id === userDetail._id
   );
 
+  const isBookmarked = userDetail.bookmarks.some((mark) => mark === post._id);
+
+  const bookmarkHandler = () => {
+    isBookmarked
+      ? dispatch(handleUnBookmark({ postId: post._id, token: token }))
+      : dispatch(handleBookmark({ postId: post._id, token: token }));
+    // dispatch(handleBookmark({ postId: post._id, token: token }));
+  };
+
   const likeHandler = () => {
     isLiked
       ? dispatch(handleDislike({ postId: post._id, token: token }))
@@ -69,8 +79,12 @@ function PostCard({ post }) {
             ></i>
             {post.likes.likeCount} Like
           </span>
-          <span>
-            <i className="fa-regular fa-bookmark"></i>
+          <span onClick={bookmarkHandler} className="btn">
+            <i
+              className={
+                isBookmarked ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"
+              }
+            ></i>
             BookMark
           </span>
         </div>
