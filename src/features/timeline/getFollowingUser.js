@@ -1,7 +1,8 @@
-export const getFollowingUser = ({ posts, following, uid }) => {
-  if (posts) {
+export const getFollowingUser = ({ post, following, uid }) => {
+  if (post) {
     const usernames = following.map(({ username }) => username);
-    return posts.filter(
+    post.map((post) => console.log(post.username, usernames));
+    return post.filter(
       ({ username }) => usernames.includes(username) || username === uid
     );
   }

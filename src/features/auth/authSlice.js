@@ -9,10 +9,32 @@ const initialState = {
   userDetail: JSON.parse(localStorage.getItem("user")) || "",
 };
 
+export const followUser = createAsyncThunk(
+  "auth/followUser",
+  async (userInfo, { rejectWithValue }) => {
+    console.log(userInfo);
+    try {
+      const res = await axios.post(
+        `/api/users/follow/${userInfo.userId}`,
+        {},
+        {
+          headers: {
+            authorization: userInfo.token,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const authHandler = createAsyncThunk(
   "auth/authHandler",
   async (formData, { rejectWithValue }) => {
-    console.log(formData);
     try {
       const res = await axios.post("/api/auth/login", formData);
       return res.data;
@@ -27,7 +49,6 @@ export const authHandler = createAsyncThunk(
 export const signUpHandler = createAsyncThunk(
   "auth/signUpHandler",
   async (formData, { rejectWithValue }) => {
-    console.log(formData);
     try {
       const res = await axios.post("/api/auth/signup", formData);
 
@@ -84,6 +105,20 @@ export const authSlice = createSlice({
       state.errorMessage = action.payload.errors;
       state.status = "Rejected";
       state.login = false;
+    },
+    [followUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [followUser.fulfilled]: (state, action) => {
+      console.log("ho gayi", action.payload);
+      state.userDetail.following = [
+        ...state.userDetail.following,
+        action.payload.followUser,
+      ];
+    },
+    [followUser.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errors;
+      state.status = "Rejected";
     },
   },
 });

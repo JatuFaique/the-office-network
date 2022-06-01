@@ -47,8 +47,6 @@ function Home() {
     uid: userDetail?.username,
   });
 
-  console.log(filteredPosts, userDetail.following);
-
   return (
     <div className="container grid">
       <SideBar />
@@ -99,7 +97,7 @@ function Home() {
             <i className="fa-solid fa-bolt"></i>Recent
           </div>
         </div>
-        {post.map((post) => {
+        {filteredPosts.map((post) => {
           return <PostCard post={post} />;
         })}
       </div>
