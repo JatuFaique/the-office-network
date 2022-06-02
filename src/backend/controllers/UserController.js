@@ -77,6 +77,7 @@ export const editUserHandler = function (schema, request) {
 
 export const getBookmarkPostsHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+  console.log("im here", user.bookmarks);
   try {
     if (!user) {
       return new Response(

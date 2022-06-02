@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
+import Bookmarks from "./pages/Bookmarks";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/mockman" element={<Mockman />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
+        <Route path="/bookmark" element={<Bookmarks />}></Route>
       </Routes>
 
       {/* <Mockman /> */}

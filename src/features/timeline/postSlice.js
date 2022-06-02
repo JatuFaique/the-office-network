@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   post: [],
+  bookmarks: JSON.parse(localStorage.getItem("user")).bookmarks || [],
   status: "",
 };
 
@@ -40,6 +41,25 @@ export const userPosts = createAsyncThunk(
 );
 
 //getUserPosts to get all post of a particular user
+//getUserBookMarks to get all bookmarks of user
+
+export const getUserBookMarks = createAsyncThunk(
+  "posts/getUserBookMarks",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.get("/api/users/bookmark/", {
+        headers: {
+          authorization: payload.token,
+        },
+      });
+      console.log("adw", res);
+      return res.data;
+    } catch (error) {
+      console.log("error");
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const handleLike = createAsyncThunk(
   "post/handleLike",
@@ -214,6 +234,17 @@ export const postSlice = createSlice({
       console.log("done");
     },
     [userDeleteComments.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [getUserBookMarks.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getUserBookMarks.fulfilled]: (state, action) => {
+      console.log("bhook", action.payload);
+      state.bookmarks = action.payload.bookmarks;
+      console.log("done");
+    },
+    [getUserBookMarks.rejected]: (state) => {
       state.status = "Rejected";
     },
   },

@@ -180,6 +180,7 @@ export const authSlice = createSlice({
     },
     [followUser.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
+      state.status = "fullfiled";
       state.userDetail.following = [
         ...state.userDetail.following,
         action.payload.followUser,
@@ -194,6 +195,7 @@ export const authSlice = createSlice({
     },
     [unfollowUser.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
+      state.status = "fullfiled";
       state.userDetail.following = [
         ...state.userDetail.following,
         action.payload.followUser,
@@ -208,6 +210,7 @@ export const authSlice = createSlice({
     },
     [handleBookmark.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
+      state.status = "fulfilled";
       state.userDetail.bookmarks = action.payload.bookmarks;
     },
     [handleBookmark.rejected]: (state, action) => {
@@ -219,6 +222,7 @@ export const authSlice = createSlice({
     },
     [handleUnBookmark.fulfilled]: (state, action) => {
       console.log("ho gayi", action.payload);
+      state.status = "fulfilled";
       state.userDetail.bookmarks = action.payload.bookmarks;
     },
     [handleUnBookmark.rejected]: (state, action) => {
