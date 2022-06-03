@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialState = {
   post: [],
-  bookmarks: JSON.parse(localStorage.getItem("user")).bookmarks || [],
+  usersPost: [],
+  bookmarks: [],
   status: "",
 };
 
@@ -41,6 +42,21 @@ export const userPosts = createAsyncThunk(
 );
 
 //getUserPosts to get all post of a particular user
+
+export const getUserPosts = createAsyncThunk(
+  "posts/getUserPosts",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`/api/posts/user/${payload.username}`);
+      console.log("user post", payload.username, res);
+      return res.data;
+    } catch (error) {
+      console.log("error");
+      return rejectWithValue(error);
+    }
+  }
+);
+
 //getUserBookMarks to get all bookmarks of user
 
 export const getUserBookMarks = createAsyncThunk(
@@ -172,6 +188,7 @@ export const postSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, action) => {
       state.post = action.payload.posts;
+      state.status = "fulfilled";
       console.log("done");
     },
     [getPosts.rejected]: (state) => {
@@ -242,9 +259,22 @@ export const postSlice = createSlice({
     [getUserBookMarks.fulfilled]: (state, action) => {
       console.log("bhook", action.payload);
       state.bookmarks = action.payload.bookmarks;
+      state.status = "fulfilled";
       console.log("done");
     },
     [getUserBookMarks.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [getUserPosts.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getUserPosts.fulfilled]: (state, action) => {
+      console.log("skksks", action.payload.posts);
+      state.usersPost = action.payload.posts;
+      state.status = "fulfilled";
+      console.log("done");
+    },
+    [getUserPosts.rejected]: (state) => {
       state.status = "Rejected";
     },
   },

@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Bookmarks from "./pages/Bookmarks";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/mockman" element={<Mockman />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
         <Route path="/bookmark" element={<Bookmarks />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
 
       {/* <Mockman /> */}
