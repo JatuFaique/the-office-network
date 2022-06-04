@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-function EditPostModal({ post, handleEditPost, setEditProfileModal }) {
+function EditPostModal({
+  post,
+  handleEditPost,
+  setEditProfileModal,
+  handleDeletePost,
+}) {
   const [postContent, setPostContent] = useState({ content: post.content });
   const handleEditedPostContent = (event) => {
     setPostContent({
@@ -33,10 +38,7 @@ function EditPostModal({ post, handleEditPost, setEditProfileModal }) {
         >
           Save
         </button>
-        <button
-          onClick={() => setEditProfileModal(false)}
-          className="btn txt-grey bg-scn"
-        >
+        <button onClick={handleDeletePost} className="btn txt-grey bg-scn">
           Delete
         </button>
       </div>

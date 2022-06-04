@@ -22,7 +22,7 @@ export const getPosts = createAsyncThunk("posts/getPost", async () => {
 //Edit User Posts
 
 export const edituserPosts = createAsyncThunk(
-  "post/userPosts",
+  "post/edituserPosts",
   async (payload, { rejectWithValue }) => {
     console.log("idhr", payload.postContent);
     try {
@@ -35,6 +35,23 @@ export const edituserPosts = createAsyncThunk(
           },
         }
       );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteUsersPost = createAsyncThunk(
+  "post/deleteUsersPost",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete(`/api/posts/${payload.postId}`, {
+        headers: {
+          authorization: payload.token,
+        },
+      });
       return res.data;
     } catch (error) {
       console.log(error);
@@ -310,6 +327,17 @@ export const postSlice = createSlice({
       console.log("done posted", action.payload.posts);
     },
     [edituserPosts.rejected]: (state) => {
+      state.status = "Rejected";
+    },
+    [deleteUsersPost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [deleteUsersPost.fulfilled]: (state, action) => {
+      state.post = action.payload.posts;
+      state.status = "fulfilled";
+      console.log("done posted", action.payload.posts);
+    },
+    [deleteUsersPost.rejected]: (state) => {
       state.status = "Rejected";
     },
   },

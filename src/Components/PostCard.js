@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { handleBookmark, handleUnBookmark } from "../features/auth/authSlice";
 import {
+  deleteUsersPost,
   edituserPosts,
   handleDislike,
   handleLike,
@@ -22,6 +23,11 @@ function PostCard({ post }) {
     dispatch(
       edituserPosts({ token: token, postId: post._id, postContent: editedPost })
     );
+    setEditPostModal(false);
+  };
+
+  const handleDeletePost = () => {
+    dispatch(deleteUsersPost({ token: token, postId: post._id }));
     setEditPostModal(false);
   };
 
@@ -72,13 +78,13 @@ function PostCard({ post }) {
   return (
     <div className="flex px-2 py-1">
       <div className="post border-bs px-2 py-1 post__horizontal">
-        <span
-          onClick={() => setEditPostModal(true)}
-          className="post__actions btn"
-        >
-          <i class="fa-solid fa-ellipsis-vertical"></i>
-        </span>
         <div className="post__header flex">
+          <span
+            onClick={() => setEditPostModal(true)}
+            className="post__actions btn"
+          >
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </span>
           <div className="av-lg txt-prm br-prm">
             A <span className="badge-act"></span>
           </div>
@@ -155,11 +161,15 @@ function PostCard({ post }) {
       </div>
 
       {editPostModal ? (
-        <div className="edit_post__overlay">
+        <div
+          style={{ position: "fixed", left: "230px", top: 0, zIndex: "80000" }}
+          className="overlay"
+        >
           <EditPostModal
             post={post}
             setEditPostModal={setEditPostModal}
             handleEditPost={handleEditPost}
+            handleDeletePost={handleDeletePost}
           />
         </div>
       ) : (
