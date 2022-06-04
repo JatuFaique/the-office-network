@@ -56,6 +56,8 @@ function PostCard({ post }) {
     );
   };
 
+  const isActiveUser = userDetail.username === post.username ? true : false;
+
   const isLiked = post.likes.likedBy?.some(
     (like) => like._id === userDetail._id
   );
@@ -79,14 +81,19 @@ function PostCard({ post }) {
     <div className="flex px-2 py-1">
       <div className="post border-bs px-2 py-1 post__horizontal">
         <div className="post__header flex">
-          <span
-            onClick={() => setEditPostModal(true)}
-            className="post__actions btn"
-          >
-            <i class="fa-solid fa-ellipsis-vertical"></i>
-          </span>
+          {isActiveUser ? (
+            <span
+              onClick={() => setEditPostModal(true)}
+              className="post__actions btn"
+            >
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </span>
+          ) : (
+            <></>
+          )}
+
           <div className="av-lg txt-prm br-prm">
-            A <span className="badge-act"></span>
+            {post.username[0]} <span className="badge-act"></span>
           </div>
           <span>
             <Link to={`/profile/${post.username}`}>
@@ -116,7 +123,7 @@ function PostCard({ post }) {
         </div>
         <div className="user__comment flex">
           <div className="av-m txt-prm br-prm">
-            {userDetail[0]} <span className="badge-act"></span>
+            {userDetail.username[0]} <span className="badge-act"></span>
           </div>
           <input
             value={comment.text}
