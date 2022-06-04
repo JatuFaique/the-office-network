@@ -1,8 +1,14 @@
 import React from "react";
 
-function ProfileCard({ userDetail, usersPost }) {
+function ProfileCard({ userDetail, usersPost, setEditProfileModal }) {
   return (
     <div class="profile__card border-radius border-bs bg-prm flex txt-white p-0-5">
+      <button
+        onClick={() => setEditProfileModal(true)}
+        className="btn px-1 py-1 bg-scn"
+      >
+        Edit Profile
+      </button>
       <div class="profile__avatar flex">
         <div class="av-lg txt br-scn bg-acc">
           A<span class="badge-act"></span>

@@ -21,3 +21,77 @@
 .about > .grid {
   gap: 0.1rem;
 }
+
+.mod {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #00000881;
+}
+
+.mod-title {
+  font-weight: bolder;
+}
+
+.dis-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.s-30 {
+  max-width: 30vw;
+  /* max-height: 30vh; */
+}
+
+.s-50 {
+  max-width: 50vw;
+  max-height: 40vh;
+}
+
+.s-75 {
+  max-width: 75vw;
+  max-height: 45vh;
+}
+
+.p-3 {
+  padding: 1rem;
+}
+
+.gr {
+  color: #ffffff;
+  border-color: gray;
+  background-color: gray;
+}
+
+.sec-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  color: #ffffff;
+}
+
+.sec-body {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: var(--colorWhite);
+}
+
+.sec-footer {
+  display: flex;
+  background-color: var(--colorWhite);
+  flex-direction: row;
+  width: auto;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  transform: translate(-12.5%);
+  background-color: rgba(0, 0, 0, 0.5);
+}

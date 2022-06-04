@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+//authSlice should be named as userslice
 
 const initialState = {
   login: false,
@@ -89,6 +90,31 @@ export const unfollowUser = createAsyncThunk(
         {
           headers: {
             authorization: userInfo.token,
+          },
+        }
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const editProfile = createAsyncThunk(
+  "auth/editProfile",
+  async (payload, { rejectWithValue }) => {
+    console.log("main hi update");
+    try {
+      const res = await axios.post(
+        "/api/users/edit",
+        {
+          userData: payload.formData,
+        },
+        {
+          headers: {
+            authorization: payload.token,
           },
         }
       );
@@ -226,6 +252,18 @@ export const authSlice = createSlice({
       state.userDetail.bookmarks = action.payload.bookmarks;
     },
     [handleUnBookmark.rejected]: (state, action) => {
+      state.errorMessage = action.payload.errors;
+      state.status = "Rejected";
+    },
+    [editProfile.pending]: (state) => {
+      state.status = "loading";
+    },
+    [editProfile.fulfilled]: (state, action) => {
+      console.log("ho gayi", action.payload);
+      state.status = "fulfilled";
+      state.userDetail = action.payload.user;
+    },
+    [editProfile.rejected]: (state, action) => {
       state.errorMessage = action.payload.errors;
       state.status = "Rejected";
     },

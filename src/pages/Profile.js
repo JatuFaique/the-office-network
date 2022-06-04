@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import EditProfileModal from "../Components/EditProfileModal";
 import PostCard from "../Components/PostCard";
 import ProfileCard from "../Components/ProfileCard";
 import RightBar from "../Components/RightBar";
 import SideBar from "../Components/SideBar";
+import { editProfile } from "../features/auth/authSlice";
 import { getpostSorted } from "../features/timeline/getpostSorted";
 import { getUserPosts, userPosts } from "../features/timeline/postSlice";
 import "./Profile.css";
@@ -13,11 +15,17 @@ function Profile() {
   const { usersPost, post, status } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [postContent, setPostContent] = useState({});
+  const [editProfileModal, setEditProfileModal] = useState(false);
   const handlePost = (event) => {
     setPostContent({
       ...postContent,
       content: event.target.value,
     });
+  };
+
+  const handleEditProfile = (userData) => {
+    dispatch(editProfile({ token: token, formData: userData }));
+    setEditProfileModal(false);
   };
 
   const handlePostSubmit = () => {
@@ -36,7 +44,11 @@ function Profile() {
     <div className="container grid">
       <SideBar />
       <div class="flex flex-dir-col py-2">
-        <ProfileCard userDetail={userDetail} usersPost={usersPost} />
+        <ProfileCard
+          setEditProfileModal={setEditProfileModal}
+          userDetail={userDetail}
+          usersPost={usersPost}
+        />
         <div className="create__post border-radius border-vs flex p-0-5">
           <div className="row flex">
             <div className="av-lg txt br-scn bg-acc">
@@ -64,6 +76,19 @@ function Profile() {
       </div>
 
       <RightBar />
+      {editProfileModal ? (
+        <>
+          <div className="overlay">
+            <EditProfileModal
+              userDetail={userDetail}
+              setEditProfileModal={setEditProfileModal}
+              handleEditProfile={handleEditProfile}
+            />
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
