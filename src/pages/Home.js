@@ -31,7 +31,6 @@ function Home() {
 
   useEffect(() => {
     //   Get posts
-
     dispatch(getPosts());
   }, []);
 

@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 function SideBar() {
   const isMounted = useRef(false);
-  const { token } = useSelector((state) => state.auth);
+  const { userDetail, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //   Clear Local Storage and navigate to "/" remove encodedtoken
@@ -55,7 +55,7 @@ function SideBar() {
             </li>
             <li>
               <div className="tab px-1 py-0-5">
-                <NavLink to="/profile">
+                <NavLink to={`/profile/${userDetail.username}`}>
                   <i class="fa-solid fa-user-tie"></i>
                   <span class="hideMd"> Profile </span>
                 </NavLink>

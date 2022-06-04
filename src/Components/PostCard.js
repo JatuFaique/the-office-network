@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { handleBookmark, handleUnBookmark } from "../features/auth/authSlice";
 import {
   handleDislike,
@@ -65,7 +66,9 @@ function PostCard({ post }) {
             A <span className="badge-act"></span>
           </div>
           <span>
-            <h3>{post.username}</h3>
+            <Link to={`/profile/${post.username}`}>
+              <h3>{post.username}</h3>
+            </Link>
           </span>
         </div>
         <div className="post__text py-1">

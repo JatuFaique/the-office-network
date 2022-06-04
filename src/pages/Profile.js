@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import EditProfileModal from "../Components/EditProfileModal";
 import PostCard from "../Components/PostCard";
 import ProfileCard from "../Components/ProfileCard";
@@ -12,10 +14,15 @@ import "./Profile.css";
 
 function Profile() {
   const { userDetail, token } = useSelector((state) => state.auth);
+  const { profileUsername } = useParams();
   const { usersPost, post, status } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [postContent, setPostContent] = useState({});
+  const [anyUser, setAnyUser] = useState({});
   const [editProfileModal, setEditProfileModal] = useState(false);
+
+  const isActiveUser = userDetail.username === profileUsername ? true : false;
+
   const handlePost = (event) => {
     setPostContent({
       ...postContent,
@@ -33,42 +40,71 @@ function Profile() {
     setPostContent({ content: "" });
   };
 
-  useEffect(() => {
-    dispatch(getUserPosts({ username: userDetail.username }));
-  }, [post]);
+  const getAnyUser = async (profileUsername) => {
+    try {
+      const res = await axios.get(`/api/users/${profileUsername}`);
+      //   console.log(res);
+      return res.data.user;
+      //   setAnyUser(res.data.user);
+    } catch (err) {
+      console.log("wrng ", err);
+    }
+  };
 
-  console.log("mama", usersPost);
+  //   (async function () {
+  //     console.log("a");
+  //     let anyUser = await getAnyUser(profileUsername);
+  //     console.log("ho", anyUser);
+  //     // setAnyUser(anyUser);
+  //   })();
+
+  useEffect(() => {
+    async function any() {
+      const any = await getAnyUser(profileUsername);
+      setAnyUser(any);
+    }
+    any();
+    isActiveUser
+      ? dispatch(getUserPosts({ username: userDetail.username }))
+      : dispatch(getUserPosts({ username: profileUsername }));
+  }, [post]);
 
   const sorted_post = getpostSorted("Recent", usersPost);
   return (
     <div className="container grid">
       <SideBar />
+
       <div class="flex flex-dir-col py-2">
         <ProfileCard
+          isActiveUser={isActiveUser}
           setEditProfileModal={setEditProfileModal}
-          userDetail={userDetail}
+          userDetail={isActiveUser ? userDetail : anyUser}
           usersPost={usersPost}
         />
-        <div className="create__post border-radius border-vs flex p-0-5">
-          <div className="row flex">
-            <div className="av-lg txt br-scn bg-acc">
-              {userDetail.username[0]}
-              <span className="badge-act"></span>
+        {isActiveUser ? (
+          <div className="create__post border-radius border-vs flex p-0-5">
+            <div className="row flex">
+              <div className="av-lg txt br-scn bg-acc">
+                {userDetail.username[0]}
+                <span className="badge-act"></span>
+              </div>
+              <textarea
+                value={postContent.content}
+                onChange={handlePost}
+                className="border-bs p-0-5"
+                placeholder="Whats on your Mind?"
+              ></textarea>
             </div>
-            <textarea
-              value={postContent.content}
-              onChange={handlePost}
-              className="border-bs p-0-5"
-              placeholder="Whats on your Mind?"
-            ></textarea>
+            <button
+              onClick={handlePostSubmit}
+              className="btn bg-prm py-0-25 px-0-5 txt-white"
+            >
+              Send
+            </button>
           </div>
-          <button
-            onClick={handlePostSubmit}
-            className="btn bg-prm py-0-25 px-0-5 txt-white"
-          >
-            Send
-          </button>
-        </div>
+        ) : (
+          <></>
+        )}
 
         {sorted_post.map((post) => {
           return <PostCard post={post} />;

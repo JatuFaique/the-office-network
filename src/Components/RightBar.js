@@ -16,7 +16,7 @@ function RightBar() {
 
   const getAllUsers = async () => {
     try {
-      const response = await axios.get("api/users");
+      const response = await axios.get("/api/users");
       if (response.status === 200 || 201) {
         // console.log("gg", response.data);
         console.log("here");

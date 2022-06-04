@@ -16,7 +16,7 @@ function App() {
         <Route path="/mockman" element={<Mockman />}></Route>
         <Route path="/explore" element={<Explore />}></Route>
         <Route path="/bookmark" element={<Bookmarks />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/profile/:profileUsername" element={<Profile />}></Route>
       </Routes>
 
       {/* <Mockman /> */}

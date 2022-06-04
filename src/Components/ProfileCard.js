@@ -1,14 +1,25 @@
 import React from "react";
 
-function ProfileCard({ userDetail, usersPost, setEditProfileModal }) {
+function ProfileCard({
+  isActiveUser,
+  userDetail,
+  usersPost,
+  setEditProfileModal,
+}) {
+  console.log("pappa", userDetail);
   return (
     <div class="profile__card border-radius border-bs bg-prm flex txt-white p-0-5">
-      <button
-        onClick={() => setEditProfileModal(true)}
-        className="btn px-1 py-1 bg-scn"
-      >
-        Edit Profile
-      </button>
+      {isActiveUser ? (
+        <button
+          onClick={() => setEditProfileModal(true)}
+          className="btn px-1 py-1 bg-scn"
+        >
+          Edit Profile
+        </button>
+      ) : (
+        <></>
+      )}
+
       <div class="profile__avatar flex">
         <div class="av-lg txt br-scn bg-acc">
           A<span class="badge-act"></span>
@@ -17,22 +28,22 @@ function ProfileCard({ userDetail, usersPost, setEditProfileModal }) {
       </div>
       <div class="profile__information flex p-0-5">
         <div class="followers p-0-5">
-          {userDetail.followers.length}
+          {userDetail.followers?.length}
           <span>followers</span>
         </div>
         <div class="posts p-0-5">
-          {usersPost.length} <span>posts</span>
+          {usersPost?.length} <span>posts</span>
         </div>
         <div class="following p-0-5">
-          {userDetail.following.length} <span>following</span>
+          {userDetail.following?.length} <span>following</span>
         </div>
       </div>
       <div class="about flex">
         <div class="grid">
           <h3>Bio</h3>
-          <p>Im a Rider, Provider</p>
+          <p>{userDetail?.bio}</p>
           <h2>Portfolio</h2>
-          <p>www.facebook.com</p>
+          <p>{userDetail?.portfolio}</p>
         </div>
         <div>
           <button class="btn px-1 py-1 border-bs border-radius bg-scn txt-white">
