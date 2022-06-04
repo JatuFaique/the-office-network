@@ -1,4 +1,5 @@
 .post {
+  position: relative;
   background-color: var(--colorWhite);
   /* max-width: 32rem; */
   width: 100%;
@@ -41,4 +42,24 @@
   position: absolute;
   top: 16px;
   right: 8px;
+}
+
+.post__actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.edit_post__overlay {
+  z-index: 1000;
+  width: 100vw;
+
+  height: 111vh;
+  position: fixed;
+  transform: translate(-600px, -270px);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mod textarea {
+  width: 100%;
 }

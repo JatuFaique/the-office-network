@@ -3,16 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { handleBookmark, handleUnBookmark } from "../features/auth/authSlice";
 import {
+  edituserPosts,
   handleDislike,
   handleLike,
   userComments,
   userDeleteComments,
 } from "../features/timeline/postSlice";
+import EditPostModal from "./EditPostModal";
 
 function PostCard({ post }) {
   const { userDetail, token } = useSelector((state) => state.auth);
   const [comment, setComment] = useState({});
+  const [editPostModal, setEditPostModal] = useState(false);
   const dispatch = useDispatch();
+
+  const handleEditPost = (editedPost) => {
+    console.log("jj", editedPost);
+    dispatch(
+      edituserPosts({ token: token, postId: post._id, postContent: editedPost })
+    );
+    setEditPostModal(false);
+  };
 
   const handleComment = (event) => {
     setComment({
@@ -61,6 +72,12 @@ function PostCard({ post }) {
   return (
     <div className="flex px-2 py-1">
       <div className="post border-bs px-2 py-1 post__horizontal">
+        <span
+          onClick={() => setEditPostModal(true)}
+          className="post__actions btn"
+        >
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </span>
         <div className="post__header flex">
           <div className="av-lg txt-prm br-prm">
             A <span className="badge-act"></span>
@@ -134,24 +151,20 @@ function PostCard({ post }) {
               </div>
             );
           })}
-
-          {/* <div className="comment__card border-radius p-0-5">
-            <div className="flex">
-              <div className="av-m txt-white bg-scn">R</div>
-              <span>
-                <h3>Hello</h3>
-              </span>
-            </div>
-
-            <div className="comment__content">
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Repellendus ut deserunt
-              </p>
-            </div>
-          </div> */}
         </div>
       </div>
+
+      {editPostModal ? (
+        <div className="edit_post__overlay">
+          <EditPostModal
+            post={post}
+            setEditPostModal={setEditPostModal}
+            handleEditPost={handleEditPost}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
