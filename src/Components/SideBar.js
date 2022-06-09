@@ -10,9 +10,8 @@ function SideBar() {
   const navigate = useNavigate();
   //   Clear Local Storage and navigate to "/" remove encodedtoken
   const handleLogout = () => {
-    setTimeout(() => {
-      dispatch(logoutUser());
-    }, 2000);
+    dispatch(logoutUser());
+    navigate("/");
   };
 
   useEffect(() => {

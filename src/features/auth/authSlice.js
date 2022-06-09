@@ -163,6 +163,7 @@ export const authSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       return {
+        login: false,
         userDetail: "",
         token: null,
       };
