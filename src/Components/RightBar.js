@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { followUser } from "../features/auth/authSlice";
 
 function RightBar() {
@@ -53,7 +54,9 @@ function RightBar() {
               return (
                 <div class="suggestion__item flex py-0-5">
                   <div class="av-lg txt-scn br-scn">{user.username[0]}</div>
-                  <span>{user.username}</span>
+                  <Link to={`/profile/${user.username}`}>
+                    <span>{user.username}</span>
+                  </Link>
                   <div>
                     <button
                       onClick={() => handleFollow(user._id)}
