@@ -89,7 +89,7 @@ export const getUserPosts = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const res = await axios.get(`/api/posts/user/${payload.username}`);
-      console.log("user post", payload.username, res);
+      // console.log("user post", payload.username, res);
       return res.data;
     } catch (error) {
       console.log("error");
@@ -310,7 +310,7 @@ export const postSlice = createSlice({
       state.status = "loading";
     },
     [getUserPosts.fulfilled]: (state, action) => {
-      console.log("skksks", action.payload.posts);
+      // console.log("skksks", action.payload.posts);
       state.usersPost = action.payload.posts;
       state.status = "fulfilled";
       console.log("done");

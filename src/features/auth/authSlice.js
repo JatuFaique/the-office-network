@@ -59,7 +59,7 @@ export const handleUnBookmark = createAsyncThunk(
 export const followUser = createAsyncThunk(
   "auth/followUser",
   async (userInfo, { rejectWithValue }) => {
-    console.log(userInfo);
+    console.log("hi", userInfo);
     try {
       const res = await axios.post(
         `/api/users/follow/${userInfo.userId}`,

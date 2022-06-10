@@ -7,7 +7,11 @@ import PostCard from "../Components/PostCard";
 import ProfileCard from "../Components/ProfileCard";
 import RightBar from "../Components/RightBar";
 import SideBar from "../Components/SideBar";
-import { editProfile } from "../features/auth/authSlice";
+import {
+  editProfile,
+  followUser,
+  unfollowUser,
+} from "../features/auth/authSlice";
 import { getpostSorted } from "../features/timeline/getpostSorted";
 import { getUserPosts, userPosts } from "../features/timeline/postSlice";
 import "./Profile.css";
@@ -18,6 +22,7 @@ function Profile() {
   const { usersPost, post, status } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [postContent, setPostContent] = useState({});
+  const [userFol, setUserFol] = useState("Follow");
   const [anyUser, setAnyUser] = useState({});
   const [editProfileModal, setEditProfileModal] = useState(false);
 
@@ -67,19 +72,49 @@ function Profile() {
     isActiveUser
       ? dispatch(getUserPosts({ username: userDetail.username }))
       : dispatch(getUserPosts({ username: profileUsername }));
-  }, [post]);
+  }, [post, userDetail]);
+
+  // useEffect(() => {
+  //   console.log("check");
+  //   anyUser.followers?.map((user) => {
+  //     user.username === userDetail.username
+  //       ? setUserFol("UnFollow")
+  //       : setUserFol("Follow");
+  //   });
+  // }, [dispatch]);
 
   const sorted_post = getpostSorted("Recent", usersPost);
+
+  console.log("user: ", anyUser);
+
+  const isFollowing = anyUser?.followers?.some(
+    (any) => any.username === userDetail.username
+  );
+  console.log(isFollowing);
   return (
     <div className="container grid">
       <SideBar />
 
-      <div class="flex flex-dir-col py-2">
+      <div class="flex flex-dir-col py-2 pos-relative">
+        <div>
+          <button
+            onClick={() => {
+              isFollowing
+                ? dispatch(unfollowUser({ userId: anyUser._id, token: token }))
+                : dispatch(followUser({ userId: anyUser._id, token: token }));
+            }}
+            class="btn px-1 py-1 border-bs border-radius bg-scn txt-white pos-absolute top-right"
+          >
+            {isFollowing ? "UnFollow" : "Follow"}
+          </button>
+        </div>
         <ProfileCard
           isActiveUser={isActiveUser}
           setEditProfileModal={setEditProfileModal}
-          userDetail={isActiveUser ? userDetail : anyUser}
+          currUserDetail={isActiveUser ? userDetail : anyUser}
           usersPost={usersPost}
+          followUser={followUser}
+          unfollowUser={unfollowUser}
         />
         {isActiveUser ? (
           <div className="create__post border-radius border-vs flex p-0-5">

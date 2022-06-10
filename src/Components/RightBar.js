@@ -19,7 +19,7 @@ function RightBar() {
       const response = await axios.get("/api/users");
       if (response.status === 200 || 201) {
         // console.log("gg", response.data);
-        console.log("here");
+
         setUsers(response.data.users);
       }
     } catch (error) {
@@ -33,7 +33,7 @@ function RightBar() {
   const getNonFollow = (users) => {
     if (users) {
       const usernames = userDetail?.following.map(({ username }) => username);
-      users.map((user) => console.log(user.username, usernames));
+
       return users.filter(
         ({ username }) =>
           !usernames.includes(username) || username === userDetail?.username
