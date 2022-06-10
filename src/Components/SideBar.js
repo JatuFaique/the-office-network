@@ -29,8 +29,11 @@ function SideBar() {
         <div class="tabs__container border-bs border-radius">
           <ul class="tabs grid">
             <li>
-              <div className="tab px-1 txt-prm py-0-5">
-                <NavLink to="/home">
+              <div className="tab px-1  py-0-5">
+                <NavLink
+                  to="/home"
+                  className={({ isActive }) => (isActive ? "txt-prm" : "")}
+                >
                   <i class="fa-solid fa-house"></i>
                   <span class="hideMd"> Home </span>
                 </NavLink>
@@ -38,7 +41,10 @@ function SideBar() {
             </li>
             <li>
               <div className="tab px-1 py-0-5">
-                <NavLink to="/explore">
+                <NavLink
+                  to="/explore"
+                  className={({ isActive }) => (isActive ? "txt-prm" : "")}
+                >
                   <i class="fa-regular fa-building"></i>
                   <span class="hideMd"> Explore </span>
                 </NavLink>
@@ -46,7 +52,10 @@ function SideBar() {
             </li>
             <li>
               <div className="tab px-1 py-0-5">
-                <NavLink to="/bookmark">
+                <NavLink
+                  to="/bookmark"
+                  className={({ isActive }) => (isActive ? "txt-prm" : "")}
+                >
                   <i class="fa-regular fa-bookmark"></i>
                   <span class="hideMd"> BookMark </span>
                 </NavLink>
@@ -54,7 +63,10 @@ function SideBar() {
             </li>
             <li>
               <div className="tab px-1 py-0-5">
-                <NavLink to={`/profile/${userDetail.username}`}>
+                <NavLink
+                  to={`/profile/${userDetail.username}`}
+                  className={({ isActive }) => (isActive ? "txt-prm" : "")}
+                >
                   <i class="fa-solid fa-user-tie"></i>
                   <span class="hideMd"> Profile </span>
                 </NavLink>
