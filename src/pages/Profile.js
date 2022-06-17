@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import EditProfileModal from "../Components/EditProfileModal";
+import { usersHandler } from "../features/users/usersSlice";
 import PostCard from "../Components/PostCard";
 import ProfileCard from "../Components/ProfileCard";
 import RightBar from "../Components/RightBar";
@@ -18,6 +19,7 @@ import "./Profile.css";
 
 function Profile() {
   const { userDetail, token } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.user);
   const { profileUsername } = useParams();
   const { usersPost, post, status } = useSelector((state) => state.post);
   const dispatch = useDispatch();
@@ -37,6 +39,7 @@ function Profile() {
 
   const handleEditProfile = (userData) => {
     dispatch(editProfile({ token: token, formData: userData }));
+    dispatch(usersHandler());
     setEditProfileModal(false);
   };
 

@@ -53,7 +53,13 @@ function RightBar() {
             {nonFollowUser.map((user) => {
               return (
                 <div class="suggestion__item flex py-0-5">
-                  <div class="av-lg txt-scn br-scn">{user.username[0]}</div>
+                  <div class="av-lg txt-scn br-scn">
+                    {user.profilePic ? (
+                      <img src={user.profilePic} />
+                    ) : (
+                      <>{user.username[0]}</>
+                    )}
+                  </div>
                   <Link to={`/profile/${user.username}`}>
                     <span>{user.username}</span>
                   </Link>

@@ -11,9 +11,29 @@ function ProfileCard({
 }) {
   return (
     <div class="profile__card border-radius border-bs bg-prm flex txt-white p-0-5">
+      {isActiveUser ? (
+        <>
+          <button
+            onClick={() => setEditProfileModal(true)}
+            className="btn px-1 py-1 bg-scn"
+          >
+            Edit Profile
+          </button>
+        </>
+      ) : (
+        <></>
+      )}
+
       <div class="profile__avatar flex">
         <div class="av-lg txt br-scn bg-acc">
-          A<span class="badge-act"></span>
+          {currUserDetail?.profilePic ? (
+            <img src={currUserDetail.profilePic} />
+          ) : (
+            <>
+              <i class="fa-solid fa-user-tie"></i>
+            </>
+          )}
+          <span class="badge-act"></span>
         </div>
         <div class="bold">{`@${currUserDetail.username}`}</div>
       </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { authHandler } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { usersHandler } from "../features/users/usersSlice";
 
 function SignIn({ checkStatus }) {
   const isMounted = useRef(false);
@@ -18,6 +19,7 @@ function SignIn({ checkStatus }) {
   };
   const handleSignIn = () => {
     dispatch(authHandler(formData));
+    dispatch(usersHandler());
     // navigate("/home");
   };
   useEffect(() => {

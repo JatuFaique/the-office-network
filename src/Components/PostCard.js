@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { handleBookmark, handleUnBookmark } from "../features/auth/authSlice";
@@ -10,13 +10,19 @@ import {
   userComments,
   userDeleteComments,
 } from "../features/timeline/postSlice";
+import Comments from "./Comments";
 import EditPostModal from "./EditPostModal";
 
 function PostCard({ post }) {
   const { userDetail, token } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.user);
   const [comment, setComment] = useState({});
   const [editPostModal, setEditPostModal] = useState(false);
   const dispatch = useDispatch();
+
+  const userInfo =
+    users && users?.find((user) => user.username === post.username);
+  console.log("hi", userInfo);
 
   const handleEditPost = (editedPost) => {
     console.log("jj", editedPost);
@@ -93,7 +99,14 @@ function PostCard({ post }) {
           )}
 
           <div className="av-lg txt-prm br-prm">
-            {post.username[0]} <span className="badge-act"></span>
+            {userInfo?.profilePic ? (
+              <img src={userInfo.profilePic} />
+            ) : (
+              <>
+                <i class="fa-solid fa-user-tie"></i>
+              </>
+            )}
+            <span className="badge-act"></span>
           </div>
           <span>
             <Link to={`/profile/${post.username}`}>
@@ -123,7 +136,14 @@ function PostCard({ post }) {
         </div>
         <div className="user__comment flex">
           <div className="av-m txt-prm br-prm">
-            {userDetail.username[0]} <span className="badge-act"></span>
+            {userInfo?.profilePic ? (
+              <img src={userInfo.profilePic} />
+            ) : (
+              <>
+                <i class="fa-solid fa-user-tie"></i>
+              </>
+            )}
+            <span className="badge-act"></span>
           </div>
           <input
             value={comment.text}
@@ -141,27 +161,10 @@ function PostCard({ post }) {
         <div className="post__comments flex column py-1">
           {post.comments?.map((comment) => {
             return (
-              <div className="comment__card border-radius p-0-5">
-                <div className="flex">
-                  <div className="av-m txt-white bg-scn">
-                    {comment.username[0]}
-                  </div>
-                  <span>
-                    <h3>{comment.username}</h3>
-                  </span>
-                </div>
-
-                <div className="comment__content">
-                  <p>{comment.text}</p>
-                </div>
-                {userDetail.username === comment.username ? (
-                  <span onClick={() => handleCommentDelete(comment._id)}>
-                    <i class=" btn trash fa-solid fa-trash"></i>
-                  </span>
-                ) : (
-                  <></>
-                )}
-              </div>
+              <Comments
+                handleCommentDelete={handleCommentDelete}
+                comment={comment}
+              />
             );
           })}
         </div>

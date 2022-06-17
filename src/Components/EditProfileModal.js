@@ -1,10 +1,42 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { usersHandler } from "../features/users/usersSlice";
 
 function EditProfileModal(props) {
-  const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
+  const { users } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    profilePic: props.userDetail.profilePic,
+  });
   const handleFormData = (event) => {
     const field = event.target.name;
     setFormData({ ...formData, [field]: event.target.value });
+    dispatch(usersHandler());
+  };
+
+  const updateImageHandler = async (image) => {
+    try {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "kxuf4wob");
+      const requestOptions = {
+        method: "POST",
+        body: data,
+      };
+      await fetch(
+        "https://api.cloudinary.com/v1_1/dn3a9onu6/upload",
+        requestOptions
+      )
+        .then((response) => response.json())
+        .then((json) => {
+          setFormData({ ...formData, profilePic: json.url });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <section className="mod dis-flex-col s-30">
@@ -17,34 +49,15 @@ function EditProfileModal(props) {
       </div>
       <div className="sec-body  p-3">
         <form>
-          <div class="input-field">
-            <input
-              name="username"
-              id="email-field"
-              class="border-bs"
-              type="text"
-              pattern=".*\S.*"
-              required
-              onChange={handleFormData}
-            />
-            <label for="email-field" class="placeholder txt">
-              Enter UserName
-            </label>
+          <div class="av-s">
+            <img src={formData.profilePic} />
           </div>
-          <div class="input-field">
-            <input
-              name="email"
-              id="email-field"
-              class="border-bs"
-              type="text"
-              pattern=".*\S.*"
-              required
-              onChange={handleFormData}
-            />
-            <label for="email-field" class="placeholder txt">
-              Enter email
-            </label>
-          </div>
+          <input
+            accept="image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/jpg,image/webp"
+            type="file"
+            onChange={(e) => updateImageHandler(e.target.files[0])}
+          />
+
           <div class="input-field">
             <input
               name="bio"
@@ -61,7 +74,7 @@ function EditProfileModal(props) {
           </div>
           <div class="input-field">
             <input
-              name="portfolioLink"
+              name="portfolio"
               id="email-field"
               class="border-bs"
               type="text"

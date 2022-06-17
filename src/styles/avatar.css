@@ -37,3 +37,24 @@
   width: 0.5rem;
   background-color: var(--colorSucces);
 }
+
+.av-s {
+  position: relative;
+  /* height: 10%;
+      width: 10%; */
+  height: 3em;
+  width: 3em;
+  font-size: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+  border-radius: 50%;
+  display: flex;
+}
+
+.av-s img {
+  height: 100%;
+  width: 100%;
+  border: 1px solid var(--fulvous-light);
+  border-radius: 50%;
+}
