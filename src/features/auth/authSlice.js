@@ -131,6 +131,10 @@ export const authHandler = createAsyncThunk(
   "auth/authHandler",
   async (formData, { rejectWithValue }) => {
     try {
+      if (formData.password.length < 6) {
+        throw { response: { data: { errors: "Password too short" } } };
+      }
+
       const res = await axios.post("/api/auth/login", formData);
       return res.data;
       // return res.response;
@@ -145,6 +149,16 @@ export const signUpHandler = createAsyncThunk(
   "auth/signUpHandler",
   async (formData, { rejectWithValue }) => {
     try {
+      if (formData.password.length < 6) {
+        throw { response: { data: { errors: "Password too short" } } };
+      }
+      let re = /\S+@\S+\.\S+/;
+      // console.log("heyyyy", re.test(formData.email));
+      if (!re.test(formData.email)) {
+        console.log("hhashha");
+
+        throw { response: { data: { errors: "Invalid Email" } } };
+      }
       const res = await axios.post("/api/auth/signup", formData);
 
       return res.data;
