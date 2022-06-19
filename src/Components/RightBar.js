@@ -6,7 +6,8 @@ import { followUser } from "../features/auth/authSlice";
 
 function RightBar() {
   const { token, userDetail } = useSelector((state) => state.auth);
-  const [users, setUsers] = useState([]);
+  const { users } = useSelector((state) => state.user);
+  const [a_users, setUsers] = useState([]);
   const dispatch = useDispatch();
 
   const handleFollow = (userId) => {
@@ -29,20 +30,20 @@ function RightBar() {
   };
   useEffect(() => {
     getAllUsers();
-  }, []);
+  }, [users]);
 
-  const getNonFollow = (users) => {
-    if (users) {
+  const getNonFollow = (a_users) => {
+    if (a_users) {
       const usernames = userDetail?.following.map(({ username }) => username);
 
-      return users.filter(
+      return a_users.filter(
         ({ username }) =>
           !usernames.includes(username) || username === userDetail?.username
       );
     }
   };
 
-  const nonFollowUser = getNonFollow(users);
+  const nonFollowUser = getNonFollow(a_users);
 
   return (
     <div class="col-3">

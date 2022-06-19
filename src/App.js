@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Bookmarks from "./pages/Bookmarks";
 import Profile from "./pages/Profile";
+import Post from "./Components/Post";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/explore" element={<Explore />}></Route>
         <Route path="/bookmark" element={<Bookmarks />}></Route>
         <Route path="/profile/:profileUsername" element={<Profile />}></Route>
+        <Route path="/:post_id" element={<Post />}></Route>
       </Routes>
 
       {/* <Mockman /> */}

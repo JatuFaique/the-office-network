@@ -14,6 +14,7 @@ import Comments from "./Comments";
 import EditPostModal from "./EditPostModal";
 
 function PostCard({ post }) {
+  console.log("im in", post);
   const { userDetail, token } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.user);
   const [comment, setComment] = useState({});
@@ -64,7 +65,7 @@ function PostCard({ post }) {
 
   const isActiveUser = userDetail.username === post.username ? true : false;
 
-  const isLiked = post.likes.likedBy?.some(
+  const isLiked = post.likes?.likedBy?.some(
     (like) => like._id === userDetail._id
   );
 
@@ -115,7 +116,9 @@ function PostCard({ post }) {
           </span>
         </div>
         <div className="post__text py-1">
-          <p>{post.content}</p>
+          <Link to={`/${post._id}`}>
+            <p>{post.content}</p>
+          </Link>
         </div>
         <div className="post__buttons flex py-1">
           <span onClick={likeHandler} className="btn txt-scn">
@@ -123,7 +126,7 @@ function PostCard({ post }) {
             <i
               className={isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"}
             ></i>
-            {post.likes.likeCount} Like
+            {post.likes?.likeCount} Like
           </span>
           <span onClick={bookmarkHandler} className="btn">
             <i

@@ -75,7 +75,7 @@ function Profile() {
     isActiveUser
       ? dispatch(getUserPosts({ username: userDetail.username }))
       : dispatch(getUserPosts({ username: profileUsername }));
-  }, [post, userDetail, profileUsername]);
+  }, [post, userDetail, profileUsername, users]);
 
   // useEffect(() => {
   //   console.log("check");
