@@ -100,16 +100,22 @@ function Profile() {
 
       <div class="flex flex-dir-col py-2 pos-relative">
         <div>
-          <button
-            onClick={() => {
-              isFollowing
-                ? dispatch(unfollowUser({ userId: anyUser._id, token: token }))
-                : dispatch(followUser({ userId: anyUser._id, token: token }));
-            }}
-            class="btn px-1 py-1 border-bs border-radius bg-scn txt-white pos-absolute top-right"
-          >
-            {isFollowing ? "UnFollow" : "Follow"}
-          </button>
+          {isActiveUser ? (
+            <></>
+          ) : (
+            <button
+              onClick={() => {
+                isFollowing
+                  ? dispatch(
+                      unfollowUser({ userId: anyUser._id, token: token })
+                    )
+                  : dispatch(followUser({ userId: anyUser._id, token: token }));
+              }}
+              class="btn px-1 py-1 border-bs border-radius bg-scn txt-white pos-absolute top-right"
+            >
+              {isFollowing ? "UnFollow" : "Follow"}
+            </button>
+          )}
         </div>
         <ProfileCard
           isActiveUser={isActiveUser}
