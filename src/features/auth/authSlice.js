@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axios from "axios";
 //authSlice should be named as userslice
 
@@ -25,9 +26,11 @@ export const handleBookmark = createAsyncThunk(
         }
       );
       console.log(res.data);
+      toast.success("Bookmark Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Bookmark Failed");
       return rejectWithValue(error);
     }
   }
@@ -48,9 +51,11 @@ export const handleUnBookmark = createAsyncThunk(
         }
       );
       console.log(res.data);
+      toast.success("Unbookmark Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Unbookmark Failed");
       return rejectWithValue(error);
     }
   }
@@ -71,9 +76,11 @@ export const followUser = createAsyncThunk(
         }
       );
       console.log(res.data);
+      toast.success("Follow Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Follow user failed");
       return rejectWithValue(error);
     }
   }
@@ -94,9 +101,11 @@ export const unfollowUser = createAsyncThunk(
         }
       );
       console.log(res.data);
+      toast.success("Unfollow Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Unfollow Failed");
       return rejectWithValue(error);
     }
   }
@@ -118,10 +127,12 @@ export const editProfile = createAsyncThunk(
           },
         }
       );
+      toast.success("Edit Successfull");
       console.log(res.data);
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Edit Failed");
       return rejectWithValue(error);
     }
   }
@@ -136,9 +147,11 @@ export const authHandler = createAsyncThunk(
       }
 
       const res = await axios.post("/api/auth/login", formData);
+      toast.success("Success");
       return res.data;
       // return res.response;
     } catch (error) {
+      toast.warn("Something went wrong");
       console.log("errop", error.response.status);
       return rejectWithValue(error.response.data);
     }
@@ -159,10 +172,12 @@ export const signUpHandler = createAsyncThunk(
 
         throw { response: { data: { errors: "Invalid Email" } } };
       }
+      toast.success(`Sign Up Successful`);
       const res = await axios.post("/api/auth/signup", formData);
 
       return res.data;
     } catch (err) {
+      toast.error("Something went wrong");
       console.log("wrng ", err);
       return rejectWithValue(err.response.data);
     }
@@ -176,6 +191,7 @@ export const authSlice = createSlice({
     logoutUser: () => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      toast.success("Logout Successfull");
       return {
         login: false,
         userDetail: "",

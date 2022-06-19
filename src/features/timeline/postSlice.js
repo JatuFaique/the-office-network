@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const initialState = {
@@ -35,9 +36,11 @@ export const edituserPosts = createAsyncThunk(
           },
         }
       );
+      toast.success("Edit Post Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Edit Failed");
       return rejectWithValue(error);
     }
   }
@@ -52,9 +55,11 @@ export const deleteUsersPost = createAsyncThunk(
           authorization: payload.token,
         },
       });
+      toast.success("Delete Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Delete Failed");
       return rejectWithValue(error);
     }
   }
@@ -74,9 +79,11 @@ export const userPosts = createAsyncThunk(
           },
         }
       );
+      toast.success("Post Successfull");
       return res.data;
     } catch (error) {
       console.log(error);
+      toast.warn("Post Failed");
       return rejectWithValue(error);
     }
   }
@@ -177,11 +184,13 @@ export const userComments = createAsyncThunk(
         }
       );
       console.log("comment ", res.data);
+      toast.success("Comment Successfull");
       return {
         comments: res.data.comments,
         postId: payload.postId,
       };
     } catch (error) {
+      toast.warn("Comment Failed");
       console.log(error);
       return rejectWithValue(error);
     }
@@ -203,12 +212,14 @@ export const userDeleteComments = createAsyncThunk(
         }
       );
       console.log("comment ", res.data);
+      toast.success("Comment Deleted");
       return {
         comments: res.data.comments,
         postId: payload.postId,
       };
     } catch (error) {
       console.log(error);
+      toast.warn("Comment Delete Failed");
       return rejectWithValue(error);
     }
   }
