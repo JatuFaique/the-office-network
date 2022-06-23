@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import notfound from "../assets/not-found.svg";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../Components/PostCard";
 import RightBar from "../Components/RightBar";
@@ -96,9 +97,19 @@ function Home() {
             <i className="fa-solid fa-bolt"></i>Recent
           </div>
         </div>
-        {filteredPosts.map((post) => {
-          return <PostCard post={post} />;
-        })}
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post) => {
+            return <PostCard post={post} />;
+          })
+        ) : (
+          <>
+            {" "}
+            <div className="container just-center flex-dir-col not__found flex">
+              <img src={notfound} border="0" />
+              <p className="bold txt-prm">Start Following to See posts here</p>
+            </div>
+          </>
+        )}
       </div>
       <RightBar />
     </div>

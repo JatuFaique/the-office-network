@@ -22,6 +22,13 @@ function SignIn({ checkStatus }) {
     dispatch(usersHandler());
     // navigate("/home");
   };
+
+  const handleTest = () => {
+    setFormData({
+      username: "JatuFaique",
+      password: "pass@123",
+    });
+  };
   useEffect(() => {
     if (isMounted.current) {
       navigate("/home");
@@ -36,6 +43,7 @@ function SignIn({ checkStatus }) {
       <p>{checkStatus()}</p>
       <div class="input-field">
         <input
+          value={formData.username}
           name="username"
           id="email-field"
           class="border-bs"
@@ -50,6 +58,7 @@ function SignIn({ checkStatus }) {
       </div>
       <div class="input-field">
         <input
+          value={formData.password}
           name="password"
           id="email-field"
           class="border-bs"
@@ -64,6 +73,9 @@ function SignIn({ checkStatus }) {
       </div>
       <button onClick={handleSignIn} class="btn bg-prm px-2 py-0-5 txt-white">
         Sign In
+      </button>
+      <button onClick={handleTest} class="btn bg-scn px-2 py-0-5 txt-white">
+        Test Credentials
       </button>
     </div>
   );

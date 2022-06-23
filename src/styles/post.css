@@ -15,11 +15,12 @@
 }
 
 .post__text {
+  font-size: var(--lenmed2);
   border-bottom: 1px solid var(--colorAcc);
 }
 
 .post__buttons {
-  font-size: var(--lenmed3);
+  font-size: var(--lenmed2);
 }
 
 .user__comment {

@@ -35,7 +35,7 @@ function SideBar() {
                   className={({ isActive }) => (isActive ? "txt-prm" : "")}
                 >
                   <i class="fa-solid fa-house"></i>
-                  <span class="hideMd"> Home </span>
+                  <span class="hideMd">Home</span>
                 </NavLink>
               </div>
             </li>
@@ -46,7 +46,7 @@ function SideBar() {
                   className={({ isActive }) => (isActive ? "txt-prm" : "")}
                 >
                   <i class="fa-regular fa-building"></i>
-                  <span class="hideMd"> Explore </span>
+                  <span class="hideMd">Explore</span>
                 </NavLink>
               </div>
             </li>
@@ -57,7 +57,7 @@ function SideBar() {
                   className={({ isActive }) => (isActive ? "txt-prm" : "")}
                 >
                   <i class="fa-regular fa-bookmark"></i>
-                  <span class="hideMd"> BookMark </span>
+                  <span class="hideMd">BookMark</span>
                 </NavLink>
               </div>
             </li>
@@ -68,7 +68,7 @@ function SideBar() {
                   className={({ isActive }) => (isActive ? "txt-prm" : "")}
                 >
                   <i class="fa-solid fa-user-tie"></i>
-                  <span class="hideMd"> Profile </span>
+                  <span class="hideMd">Profile</span>
                 </NavLink>
               </div>
             </li>

@@ -34,12 +34,19 @@ function RightBar() {
 
   const getNonFollow = (a_users) => {
     if (a_users) {
+      console.log(a_users);
+      a_users = a_users.filter(
+        (user) => user.username !== userDetail?.username
+      );
+      console.log(a_users);
       const usernames = userDetail?.following.map(({ username }) => username);
 
-      return a_users.filter(
-        ({ username }) =>
+      return a_users.filter(({ username }) => {
+        console.log(username, userDetail.username);
+        return (
           !usernames.includes(username) || username === userDetail?.username
-      );
+        );
+      });
     }
   };
 

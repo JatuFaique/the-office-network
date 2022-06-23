@@ -15,7 +15,7 @@ function ProfileCard({
         <>
           <button
             onClick={() => setEditProfileModal(true)}
-            className="btn px-1 py-1 bg-scn"
+            className="btn px-1 py-1 txt-white bg-scn border-bs border-radius"
           >
             Edit Profile
           </button>

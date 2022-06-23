@@ -264,6 +264,10 @@ a {
   color: inherit;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 /* Set Up body */
 
 body {

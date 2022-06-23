@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import notfound from "../assets/not-found.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import EditProfileModal from "../Components/EditProfileModal";
@@ -150,9 +151,18 @@ function Profile() {
           <></>
         )}
 
-        {sorted_post.map((post) => {
-          return <PostCard post={post} />;
-        })}
+        {sorted_post.length > 0 ? (
+          sorted_post.map((post) => {
+            return <PostCard post={post} />;
+          })
+        ) : (
+          <>
+            <div className="container just-center flex-dir-col not__found flex">
+              <img src={notfound} border="0" />
+              <p className="bold txt-prm">No Posts yet</p>
+            </div>
+          </>
+        )}
       </div>
 
       <RightBar />
