@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { usersHandler } from "../features/users/usersSlice";
 
 function SignIn({ checkStatus }) {
+  const [viewPassword, setViewPassword] = useState(false);
   const isMounted = useRef(false);
   const [formData, setFormData] = useState({});
   const { status, error, errorMessage, token } = useSelector(
@@ -58,11 +59,11 @@ function SignIn({ checkStatus }) {
       </div>
       <div class="input-field">
         <input
+          type={!viewPassword ? "password" : "text"}
           value={formData.password}
           name="password"
           id="email-field"
           class="border-bs"
-          type="text"
           pattern=".*\S.*"
           onChange={handleFormData}
           required
@@ -70,6 +71,21 @@ function SignIn({ checkStatus }) {
         <label for="email-field" class="placeholder txt">
           Enter Password
         </label>
+        {viewPassword ? (
+          <i
+            onClick={(e) => setViewPassword(!viewPassword)}
+            class="pos-absolute txt-white eye fa-solid fa-eye"
+          ></i>
+        ) : (
+          <i
+            onClick={(e) => setViewPassword(!viewPassword)}
+            class="pos-absolute txt-white eye fa-solid fa-eye-slash"
+          ></i>
+        )}
+        <i
+          onClick={(e) => setViewPassword(!viewPassword)}
+          class="pos-absolute eye fa-solid fa-eye"
+        ></i>
       </div>
       <button onClick={handleSignIn} class="btn bg-prm px-2 py-0-5 txt-white">
         Sign In

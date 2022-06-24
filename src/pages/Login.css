@@ -90,3 +90,9 @@ input:focus ~ .placeholder {
 .input-field .error-message:empty {
   opacity: 0;
 }
+
+.eye {
+  top: 1.5rem;
+  right: 0.5rem;
+  color: gray;
+}

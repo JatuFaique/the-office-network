@@ -40,13 +40,13 @@ function ProfileCard({
       <div class="profile__information flex p-0-5">
         <div class="followers p-0-5">
           {currUserDetail.followers?.length}
-          <span>followers</span>
+          <span> followers</span>
         </div>
         <div class="posts p-0-5">
-          {usersPost?.length} <span>posts</span>
+          {usersPost?.length} <span> posts</span>
         </div>
         <div class="following p-0-5">
-          {currUserDetail.following?.length} <span>following</span>
+          {currUserDetail.following?.length} <span> following</span>
         </div>
       </div>
       <div class="about flex">
